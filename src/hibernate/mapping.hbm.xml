@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+   
+    <class name="main.Publisher" table="PUBLISHER" > 
+          <id name="publisherId" column="publisher_id"> 
+               <generator class="increment"/> 
+          </id> 
+          <property name="name" column="name"/> 
+          <property name="address" column="address" />
+          <set name="books" inverse="true" cascade="save-update">
+               <key column="publisher_id" not-null="true"/>
+               <one-to-many class="main.Book"/>
+          </set>
+     </class> 
+     
+      <class name="main.Book" table="book">
+        <id name="bookId" column="book_id" >
+            <generator class="increment"/>
+        </id>
+        <property name="title" column="title"/>
+        <property name="pageNo" column="page_no" type="int"/>
+        <many-to-one cascade="save-update" class="main.Publisher" name="publisher" column="publisher_id" >
+        </many-to-one>
+    </class>
+</hibernate-mapping>
